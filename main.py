@@ -1,12 +1,17 @@
 import disnake
 from disnake.ext import commands
+
 from configs import config
 from utils import main_booleans as mainbool
+from spw_api import spwapi
 
 cogs = [
     "start",
     "vote",
-    "clear"
+    "clear",
+    "join",
+    "leave",
+    "server"
 ]
 cog = "cogs._"
 
@@ -74,6 +79,20 @@ async def reload(ctx, extension: str):
         except Exception as e:
             await ctx.author.send(e)
 
+
+@bot.command()
+async def updateMember(ctx):
+    if mainbool.isAuthor(ctx) and mainbool.isMain(__name__):
+        members = bot.get_guild(config.getAttr("guild-id")).members
+        for member in members:
+            if not member.bot:
+                user = spwapi.getUser(str(member.id))
+                if user:
+                    try:
+                        await member.edit(nick=user.nickname)
+                    except disnake.errors.Forbidden:
+                        pass
+        await ctx.send("Имена пользователей были изменены!")
 
 if mainbool.isMain(__name__):
     main()
