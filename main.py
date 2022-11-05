@@ -11,7 +11,8 @@ cogs = [
     "clear",
     "join",
     "leave",
-    "server"
+    "server",
+    "roles"
 ]
 cog = "cogs._"
 

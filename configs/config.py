@@ -20,14 +20,14 @@ rcon-password: 'PASSWORD'
 
 
 def createIfNotExist():
-    if not os.path.exists("./configs/config.yml"):
-        with codecs.open('./configs/config.yml', 'w', 'utf-8') as file:
+    if not os.path.exists("config.yml"):
+        with codecs.open('config.yml', 'w', 'utf-8') as file:
             config_dump = yaml.safe_load(DUMP_STR)
             yaml.dump(config_dump, file)
 
 
 def getAttr(var: str):
-    if os.path.exists("./configs/config.yml"):
-        with codecs.open('./configs/config.yml', 'r', 'utf-8') as file:
+    if os.path.exists("config.yml"):
+        with codecs.open('config.yml', 'r', 'utf-8') as file:
             return yaml.safe_load(file)[var]
     return None

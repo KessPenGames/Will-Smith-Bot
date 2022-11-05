@@ -1,5 +1,7 @@
 from disnake.ext import commands
+
 from configs import config
+from views.buttons import GuestRoleButtons, ClownRoleButtons
 
 
 class StartsCog(commands.Cog):
@@ -8,6 +10,10 @@ class StartsCog(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
+        if not self.bot.persistent_views:
+            self.bot.add_view(view=GuestRoleButtons())
+            self.bot.add_view(view=ClownRoleButtons())
+            self.bot.persistent_views_added = True
         print(f"[{config.getAttr('bot-prefix')}] Started up!")
 
 
